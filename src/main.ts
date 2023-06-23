@@ -12,8 +12,11 @@ Devvit.addMenuItem({
   location: "subreddit",
   onPress: async (_, context) => {
     console.log('FUCK1');
+    
+    const user = await context.reddit.getUserById(context.userId!);
+
     const users = new Set(await context.kvStore.get<string[]>(KEY) || []);
-    users.add(context.userId!);
+    users.add(user.username);
     await context.kvStore.put(KEY, [...users]);
   }
 });
@@ -23,8 +26,11 @@ Devvit.addMenuItem({
   location: "subreddit",
   onPress: async (_, context) => {
     console.log('FUCK2');
+
+    const user = await context.reddit.getUserById(context.userId!);
+
     const users = new Set(await context.kvStore.get<string[]>(KEY) || []);
-    users.delete(context.userId!);
+    users.delete(user.username);
     await context.kvStore.put(KEY, [...users]);
   }
 });
